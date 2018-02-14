@@ -24,14 +24,27 @@ ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 RUN rm /usr/bin/java && ln -s $JAVA_HOME/bin/java /usr/bin/java
 
-# hadoop
-RUN curl -s https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz | tar -xz -C /usr/local/
-RUN cd /usr/local && ln -s ./hadoop-2.7.3 hadoop
+# hdp
+ENV HADOOP_GROUP hadoop
+ADD http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.6.2.0/hdp.repo /etc/yum.repos.d/hdp.repo
 
-ENV HADOOP_PREFIX /usr/local/hadoop
-ENV HADOOP_COMMON_HOME /usr/local/hadoop
-ENV HADOOP_HDFS_HOME /usr/local/hadoop
-ENV HADOOP_MAPRED_HOME /usr/local/hadoop
-ENV HADOOP_YARN_HOME /usr/local/hadoop
-ENV HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop
-ENV YARN_CONF_DIR $HADOOP_PREFIX/etc/hadoop
+# zookeeper
+ENV ZOOKEEPER_USER zookeeper
+ENV ZOOKEEPER_LOG_DIR /var/log/zookeeper
+ENV ZOOKEEPER_PID_DIR /var/run/zookeeper
+ENV ZOOKEEPER_DATA_DIR /grid/hadoop/zookeeper/data
+
+RUN yum install -y zookeeper-server hadoop
+
+RUN mkdir -p $ZOOKEEPER_LOG_DIR
+RUN chown -R $ZOOKEEPER_USER:$HADOOP_GROUP $ZOOKEEPER_LOG_DIR
+RUN chmod -R 755 $ZOOKEEPER_LOG_DIR
+
+RUN mkdir -p $ZOOKEEPER_PID_DIR
+RUN chown -R $ZOOKEEPER_USER:$HADOOP_GROUP $ZOOKEEPER_PID_DIR
+RUN chmod -R 755 $ZOOKEEPER_PID_DIR
+
+RUN mkdir -p $ZOOKEEPER_DATA_DIR
+RUN chmod -R 755 $ZOOKEEPER_DATA_DIR
+RUN chown -R $ZOOKEEPER_USER:$HADOOP_GROUP $ZOOKEEPER_DATA_DIR
+
