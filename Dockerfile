@@ -24,7 +24,7 @@ ENV JAVA_HOME /usr/java/default
 ENV PATH $PATH:$JAVA_HOME/bin
 RUN rm /usr/bin/java && ln -s $JAVA_HOME/bin/java /usr/bin/java
 
-# hdp
+# hdp repo
 ENV HADOOP_GROUP hadoop
 ADD http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.6.2.0/hdp.repo /etc/yum.repos.d/hdp.repo
 
@@ -47,4 +47,45 @@ RUN chmod -R 755 $ZOOKEEPER_PID_DIR
 RUN mkdir -p $ZOOKEEPER_DATA_DIR
 RUN chmod -R 755 $ZOOKEEPER_DATA_DIR
 RUN chown -R $ZOOKEEPER_USER:$HADOOP_GROUP $ZOOKEEPER_DATA_DIR
+
+# hadoop
+RUN umask 0022
+RUN yum install -y hadoop-hdfs hadoop-libhdfs hadoop-yarn hadoop-mapreduce hadoop-client openssl
+
+# Snappy
+RUN yum install snappy snappy-devel
+
+# LZO
+RUN yum install lzo lzo-devel hadooplzo hadooplzo-native
+
+# NameNode
+ENV DFS_NAME_DIR /grid/hadoop/hdfs/nn
+ENV HDFS_USER hdfs
+RUN mkdir -p $DFS_NAME_DIR
+RUN chown -R $HDFS_USER:$HADOOP_GROUP $DFS_NAME_DIR
+RUN chmod -R 755 $DFS_NAME_DIR
+
+# SecondaryNameNode
+ENV FS_CHECKPOINT_DIR /grid/hadoop/hdfs/snn
+RUN mkdir -p $FS_CHECKPOINT_DIR
+RUN chown -R $HDFS_USER:$HADOOP_GROUP $FS_CHECKPOINT_DIR
+RUN chmod -R 755 $FS_CHECKPOINT_DIR
+
+# DataNode
+ENV DFS_DATA_DIR /grid/hadoop/hdfs/dn
+RUN mkdir -p $DFS_DATA_DIR
+RUN chown -R $HDFS_USER:$HADOOP_GROUP $DFS_DATA_DIR
+RUN chmod -R 750 $DFS_DATA_DIR
+
+# NodeManager
+ENV YARN_LOCAL_DIR /grid/hadoop/yarn/local
+ENV YARN_USER yarn
+RUN mkdir -p $YARN_LOCAL_DIR
+RUN chown -R $YARN_USER:$HADOOP_GROUP $YARN_LOCAL_DIR
+RUN chmod -R 755 $YARN_LOCAL_DIR
+
+ENV YARN_LOCAL_LOG_DIR /grid/hadoop/yarn/logs
+RUN mkdir -p $YARN_LOCAL_LOG_DIR
+RUN chown -R $YARN_USER:$HADOOP_GROUP $YARN_LOCAL_LOG_DIR
+RUN chmod -R 755 $YARN_LOCAL_LOG_DIR
 
