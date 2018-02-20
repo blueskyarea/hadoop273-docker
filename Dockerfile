@@ -53,10 +53,10 @@ RUN umask 0022
 RUN yum install -y hadoop-hdfs hadoop-libhdfs hadoop-yarn hadoop-mapreduce hadoop-client openssl
 
 # Snappy
-RUN yum install snappy snappy-devel
+RUN yum install -y snappy snappy-devel
 
 # LZO
-RUN yum install lzo lzo-devel hadooplzo hadooplzo-native
+RUN yum install -y lzo lzo-devel hadooplzo hadooplzo-native
 
 # NameNode
 ENV DFS_NAME_DIR /grid/hadoop/hdfs/nn
@@ -88,4 +88,48 @@ ENV YARN_LOCAL_LOG_DIR /grid/hadoop/yarn/logs
 RUN mkdir -p $YARN_LOCAL_LOG_DIR
 RUN chown -R $YARN_USER:$HADOOP_GROUP $YARN_LOCAL_LOG_DIR
 RUN chmod -R 755 $YARN_LOCAL_LOG_DIR
+
+# HDFS Logs
+ENV HDFS_LOG_DIR /var/log/hadoop/hdfs
+RUN mkdir -p $HDFS_LOG_DIR
+RUN chown -R $HDFS_USER:$HADOOP_GROUP $HDFS_LOG_DIR
+RUN chmod -R 755 $HDFS_LOG_DIR
+
+# Yarn Logs
+ENV YARN_LOG_DIR /var/log/hadoop/yarn
+RUN mkdir -p $YARN_LOG_DIR
+RUN chown -R $YARN_USER:$HADOOP_GROUP $YARN_LOG_DIR
+RUN chmod -R 755 $YARN_LOG_DIR
+
+# HDFS Process
+ENV HDFS_PID_DIR /var/run/hadoop/hdfs
+RUN mkdir -p $HDFS_PID_DIR
+RUN chown -R $HDFS_USER:$HADOOP_GROUP $HDFS_PID_DIR
+RUN chmod -R 755 $HDFS_PID_DIR
+
+# Yarn Process ID
+ENV YARN_PID_DIR /var/run/hadoop/yarn
+RUN mkdir -p $YARN_PID_DIR
+RUN chown -R $YARN_USER:$HADOOP_GROUP $YARN_PID_DIR
+RUN chmod -R 755 $YARN_PID_DIR
+
+# JobHistory Server Logs
+ENV MAPRED_LOG_DIR /var/log/hadoop/mapred
+ENV MAPRED_USER mapred
+RUN mkdir -p $MAPRED_LOG_DIR
+RUN chown -R $MAPRED_USER:$HADOOP_GROUP $MAPRED_LOG_DIR
+RUN chmod -R 755 $MAPRED_LOG_DIR
+
+# JobHistory Server Process ID
+ENV MAPRED_PID_DIR /var/run/hadoop/mapred
+RUN mkdir -p $MAPRED_PID_DIR
+RUN chown -R $MAPRED_USER:$HADOOP_GROUP $MAPRED_PID_DIR
+RUN chmod -R 755 $MAPRED_PID_DIR
+
+# Hadoop configuration
+ENV HADOOP_CONF_DIR /etc/hadoop/conf
+RUN chown -R $HDFS_USER:$HADOOP_GROUP $HADOOP_CONF_DIR/../
+RUN chmod -R 755 $HADOOP_CONF_DIR/../
+
+COPY files/hadoop/* /etc/hadoop/conf/
 
