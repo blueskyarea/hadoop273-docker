@@ -1,0 +1,134 @@
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+  <property>
+    <name>yarn.nodemanager.hostname</name>
+    <value>hdp-nm1001.docker</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+  </property>
+
+  <!--property>
+    <name>yarn.nodemanager.resource.memory-mb</name>
+    <value>512</value>
+  </property>
+
+  <property>
+    <name>yarn.scheduler.minimum-allocation-mb</name>
+    <value>256</value>
+  </property>
+
+  <property>
+    <name>yarn.scheduler.maximum-allocation-mb</name>
+    <value>512</value>
+  </property>
+
+  <property>
+    <name>yarn.app.mapreduce.am.resource.mb</name>
+    <value>512</value>
+  </property>
+
+  <property>
+    <name>yarn.app.mapreduce.am.command-opts</name>
+    <value>410</value>
+  </property-->
+
+  <property>
+    <name>yarn.resourcemanager.scheduler.class</name>
+    <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler</value>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.resource-tracker.address</name>
+    <value>hdp-rm1001.docker:8025</value>
+    <description>Enter your ResourceManager hostname.</description>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.scheduler.address</name>
+    <value>hdp-rm1001.docker:8030</value>
+    <description>Enter your ResourceManager hostname.</description>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.address</name>
+    <value>hdp-rm1001.docker:8050</value>
+    <description>Enter your ResourceManager hostname.</description>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.admin.address</name>
+    <value>hdp-rm1001.docker:8141</value>
+    <description>Enter your ResourceManager hostname.</description>
+  </property>
+
+  <property>
+    <name>yarn.log-aggregation-enable</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>yarn.dispatcher.exit-on-error</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <description>List of directories to store localized files in.</description>
+    <name>yarn.nodemanager.local-dirs</name>
+    <value>/grid/hadoop/cache/yarn/local</value>
+  </property>
+
+  <property>
+    <description>Where to store container logs.</description>
+    <name>yarn.nodemanager.log-dirs</name>
+    <value>/grid/hadoop/cache/yarn/log</value>
+  </property>
+
+  <property>
+    <description>Where to aggregate logs to.</description>
+    <name>yarn.nodemanager.remote-app-log-dir</name>
+    <value>/grid/hadoop/cache/hadoop/yarn/local/apps</value>
+  </property>
+
+  <property>
+    <name>yarn.log.server.url</name>
+    <value>http://hdp-rm1001.docker:19888/jobhistory/logs</value>
+  </property>
+
+  <property>
+     <name>yarn.nodemanager.recovery</name.dir>
+     <value>{hadoop.tmp.dir}/yarn-nm-recovery</value>
+  </property>
+
+  <property>
+     <name>yarn.resourcemanager.webapp.address</name>
+     <value>http://hdp-rm1001.docker:8088</value>
+     <description>URL for job history server</description>
+  </property>
+
+  <property>
+    <name>yarn.timeline-service.webapp.address</name>
+    <value>http://hdp-rm1001.docker:8188</value>
+  </property>
+
+  <property>
+     <name>yarn.application.classpath</name>
+     <value>
+       $HADOOP_CONF_DIR,
+       /usr/hdp/2.6.2.0-205/hadoop/*,
+       /usr/hdp/2.6.2.0-205/hadoop/lib/*,
+       /usr/hdp/2.6.2.0-205/hadoop-hdfs/*,
+       /usr/hdp/2.6.2.0-205/hadoop-hdfs/lib/*,
+       /usr/hdp/2.6.2.0-205/hadoop-yarn/*,
+       /usr/hdp/2.6.2.0-205/hadoop-yarn/lib/*
+     </value>
+  </property>
+</configuration>
