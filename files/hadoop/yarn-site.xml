@@ -104,19 +104,8 @@
   </property>
 
   <property>
-     <name>yarn.nodemanager.recovery</name.dir>
+     <name>yarn.nodemanager.recovery</name>
      <value>{hadoop.tmp.dir}/yarn-nm-recovery</value>
-  </property>
-
-  <property>
-     <name>yarn.resourcemanager.webapp.address</name>
-     <value>http://hdp-rm1001.docker:8088</value>
-     <description>URL for job history server</description>
-  </property>
-
-  <property>
-    <name>yarn.timeline-service.webapp.address</name>
-    <value>http://hdp-rm1001.docker:8188</value>
   </property>
 
   <property>

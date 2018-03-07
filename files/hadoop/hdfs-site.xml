@@ -30,22 +30,6 @@
      <value>/grid/hadoop/hdfs/snn</value>
   </property>
   <property>
-     <name>dfs.namenode.http-address</name>
-     <value>hdp-nn1001.docker:50070</value>
-  </property>
-  <property>
-     <name>dfs.namenode.secondary.http-address</name>
-     <value>hdp-nn1002.docker:50090</value>
-  </property>
-  <property>
-     <name>dfs.namenode.rpc-address</name>
-     <value>hdp-nn1001.docker:8020</value>
-  </property>
-  <property>
-     <name>dfs.namenode.https-address</name>
-     <value>hdp-nn1001.docker:50470</value>
-  </property>
-  <property>
      <name>dfs.datanode.data.dir</name>
      <value>/grid/hadoop/hdfs/dn</value>
    </property>
